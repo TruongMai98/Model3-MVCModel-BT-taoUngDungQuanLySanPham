@@ -5,12 +5,13 @@ import model.Product;
 import java.beans.Customizer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class ProductDB implements IProductDBTest{
     private static List<Product> products = new ArrayList<>();
 
     static {
-        products.add(new Product(1, "sua chua", 10000, "mat hang up lanh", "vina milk"));
+        products.add(new Product(1, "sua chua", 90000, "mat hang up lanh", "vina milk"));
         products.add(new Product(2, "sua chua", 10000, "mat hang up lanh", "vina milk"));
         products.add(new Product(3, "sua chua", 10000, "mat hang up lanh", "vina milk"));
         products.add(new Product(4, "sua chua", 10000, "mat hang up lanh", "vina milk"));
@@ -79,10 +80,12 @@ public class ProductDB implements IProductDBTest{
     }
 
     @Override
-    public List<Product> searchByProductName(String name) {
+    public List<Product> searchByProductNameOrId(String object) {
         List<Product> newProduct = new ArrayList<>();
         for (Product p : products) {
-            if (p.getProductName().toLowerCase().contains(name.toLowerCase())) {
+            String name = p.getProductName();
+            String id = String.valueOf(p.getProductId());
+            if ((name.toLowerCase().contains(object.toLowerCase())) || (id.equals(object))) {
                 newProduct.add(p);
             }
         }

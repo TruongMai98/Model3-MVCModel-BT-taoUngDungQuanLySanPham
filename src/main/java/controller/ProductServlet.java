@@ -3,7 +3,6 @@ package controller;
 import model.Product;
 import service.IProductDBTest;
 import service.ProductDB;
-import sun.rmi.server.Dispatcher;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -11,7 +10,6 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @WebServlet(name = "ProductServlet", value = "/products")
 public class ProductServlet extends HttpServlet {
@@ -74,17 +72,17 @@ public class ProductServlet extends HttpServlet {
     private void showListProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String search = request.getParameter("search");
         List<Product> productList;
-        if (search == null) {
+        if (search == (null)){
             productList = iProductDBTest.read();
         } else {
-            productList = iProductDBTest.searchByProductName(search);
+            productList = iProductDBTest.searchByProductNameOrId(search);
         }
 
         String pageIds = request.getParameter("page");
         List<Product> productList1 = getProductPagination(productList, pageIds);
-
         request.setAttribute("products", productList1);
         request.setAttribute("totalPage", productList.size() / TOTAL_PER_PAGE + 1);
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("/list.jsp");
         dispatcher.forward(request, response);
     }

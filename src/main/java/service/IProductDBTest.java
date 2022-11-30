@@ -10,5 +10,5 @@ public interface IProductDBTest {
     boolean update(int id, Product product);
     boolean delete(int id);
     Product searchByProductId(int id);
-    List<Product> searchByProductName(String name);
+    List<Product> searchByProductNameOrId(String object);
 }
